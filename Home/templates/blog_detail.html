@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block start %}
+
+<div class="text-center">
+  <hr>
+  {% if request.user.is_authenticated and request.user == blog_obj.user %}
+
+  {% if request.user in blog_obj.liked_by %}
+  <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+    <a class="btn btn-form-control-color"><img class="img-fluid card-img-top" src="/media/blog/like_1.png" alt="..." style="border-radius:2px;width:30px;height:30px"/></a>
+  </li>
+  {% else %}
+  <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+    <a class="btn btn-form-control-color" href="{% url 'likepost' blog_obj.id %}"><img class="img-fluid card-img-top" src="/media/blog/like.png" alt="..." style="border-radius:2px;width:30px;height:30px;float:left"/></a>
+  </li>{% endif %}
+<li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+<a class="btn btn-form-control" href="{% url 'blog_update' blog_obj.slug %}"> <img class="img-fluid card-img-top" src="/media/blog/edit.png" alt="..." style="border-radius:2px;width:30px;height:30px"/></a>
+</li>
+<li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+<a class="btn btn-form-control" href="{% url 'blog_delete' blog_obj.id %}"><img class="img-fluid card-img-top" src="/media/blog/trash.png" alt="..." style="border-radius:2px;width:30px;height:30px;"/></a>
+</li>
+
+{% else %}
+{% if request.user.is_authenticated and request.user in blog_obj.liked_by %}
+  <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+    <a class="btn btn-form-control-color"><img class="img-fluid card-img-top" src="/media/blog/like_1.png" alt="..." style="border-radius:2px;width:30px;height:30px"/></a>
+  </li>
+  {% elif request.user.is_authenticated %}
+  <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+    <a class="btn btn-form-control-color" href="{% url 'likepost' blog_obj.id %}"><img class="img-fluid card-img-top" src="/media/blog/like.png" alt="..." style="border-radius:2px;width:30px;height:30px;"/></a>
+  </li>{% endif %}
+{% endif %}
+
+<li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+<a class="btn btn-form-control" href="{% url 'home' %}"><img class="img-fluid card-img-top" src="/media/blog/house-black-silhouette-without-door.png" alt="..." style="border-radius:2px;width:30px;height:30px"/></a>
+</li>
+<hr>
+</div>
+</div>
+
+
+<section>
+    <div class="container">
+        
+        <div class="row text-center">
+            <div class="col-xl-10 mx-auto"><img class="img-fluid mb-5"
+                    src="/media/{{blog_obj.cover_image}}"
+                    alt="" style="border-radius: 5px;"></div>
+                   
+        </div>
+       
+        <div class="row">
+            <div class="col-xl-8 col-lg-10 mx-auto">
+                <div class="text-content">
+                    <div class="text-content text-center" ><h1>{{blog_obj.title}}</h1></div> 
+                    <div class="text-content text-center"> <p><b style="float:left">Author : {{blog_obj.user}} </b>  
+                         <small><img class="img-fluid card-img-top" src="/media/blog/like_1.png" alt="..." style="border-radius:2px;width:30px;height:30px"/> </small><small style="font-family:georgia;font-size:20px">{{blog_obj.like_count}}</small>
+                         <img class="img-fluid" src="/media/blog/bookmark_1.png" alt="..." style="width:20px;height:20px;margin-left:50px"/> 
+                          {{blog_obj.category}}  
+                            <small style="float:right">{{blog_obj.created_at}}</small></p></div>
+                    <hr>
+                    {{blog_obj.content|safe}}
+                </div>
+            </div>
+        </div>
+       
+</section>
+
+<hr>
+{% comment %} <div class="text-center">
+  {% if request.user.is_authenticated and request.user == blog_obj.user %}
+ 
+
+
+<br><br>
+</div>
+</div> {% endcomment %}
+
+
+
+
+
+{% endblock %}

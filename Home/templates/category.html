@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block start %}
+
+
+<div class="text-center" style="width:auto"><br>
+    {% for c in categories %}
+    {% if current == c.category %}
+    <a class="btn btn-form-control " style="border:1px solid black; margin-left:10px;background-color:grey;color:black" href="{% url 'category_view' c.category %}">   {{c.category}}     </a>
+    {% else %}
+    <a class="btn btn-form-control " style="border:1px solid black; margin-left:10px;" href="{% url 'category_view' c.category %}">   {{c.category}}     </a>
+    {% endif %}
+    {% endfor %}
+    <hr>
+</div>
+ 
+
+
+<section class="py-6">
+    <div class="container">
+      <div class="row mb-5">
+        <!-- blog item-->
+        {% for blog in selected_category %}
+        <div class="col-lg-4 col-sm-6 mb-4 hover-animate">
+          {{message}}
+          <div class="card shadow border-0 h-100">
+            <a href="{% url 'blog_detail' blog.slug %}">
+              <img class="img-fluid card-img-top" src="/media/{{blog.cover_image}}" alt="..." style="border-radius: 5px;"/></a>
+            <div class="card-body"><a class="text-uppercase text-muted text-sm letter-spacing-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+             </svg>  {{blog.User}} </a>
+              <h5 class="my-2"><a class="text-dark" href="{% url 'blog_detail' blog.slug %}">
+               {{blog.title}} </a></h5>
+               <p class="text-gray-500 text-sm my-3" style="float:left;color:black"><i class="fa fa-clock mr-2"></i>
+                <b><img class="img-fluid" src="/media/blog/bookmark_1.png" alt="..." style="width:25px;height:25px;"/>  {{blog.category}}</a></b></p>
+              <p class="text-gray-500 text-sm my-3" style="float:right"><i class="far fa-clock mr-2"></i>
+                {{blog.created_at}}</p>
+                <hr style="color:black">
+                <br>
+                <br>
+               <p class="my-2 text-muted text-sm" style="text-overflow: ellipsis ">
+                {{blog.summary|safe}}
+              </p>
+              <a class="btn btn-link pl-0" href="{% url 'blog_detail' blog.slug %}" >Read more <i class="fa fa-long-arrow-alt-right ml-2"></i></a> 
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      
+      
+      </div>
+      <!-- Pagination -->
+
+    </div>
+  </section>
+
+
+
+
+{% endblock %}
